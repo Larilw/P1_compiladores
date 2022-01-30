@@ -40,11 +40,12 @@ public class Lex {
     }
  
     static enum TokenType {
-        Finaldaentrada, Op_multiplicacao,  Op_divide, Op_mod, Op_soma, Op_subtracao,
-        Op_negate, Op_not, Op_menor, Op_menorigual, Op_maior, Op_maiorigual,
-        Op_igual, Op_naoigual, Op_atribuicao, Op_and, Op_or, Palavrachave_if,
-        Palavrachave_else, Palavrachave_while, Print, Putc, Abparentese, Fcparentese,
-        Abchave, Fcchave, Pontoevirgula, Virgula, Identificador, Inteiro, String
+        Finaldaentrada,    Op_multiplicacao,    Op_divisao,     Op_mod,        Op_soma,     Op_subtracao,
+        Op_not,              Op_menor,      Op_menorigual, Op_maior,    Op_maiorigual,
+        Op_igual,          Op_naoigual,         Op_atribuicao, Op_and,        Op_or,       Palavrachave_if,
+        Palavrachave_else, Palavrachave_while,  Abparentese,   Fcparentese,   Abchave,     Fcchave,
+        Pontoevirgula,     Virgula,             Identificador, Inteiro,       String,      Tipodado,
+        Palavrachave_for,  Palavrachave_return, Palavrachave_include
     }
  
     static void error(int line, int pos, String msg) {
@@ -64,10 +65,15 @@ public class Lex {
         this.chr = this.s.charAt(0);
         this.keywords.put("if", TokenType.Palavrachave_if);
         this.keywords.put("else", TokenType.Palavrachave_else);
-        this.keywords.put("print", TokenType.Print);
-        this.keywords.put("putc", TokenType.Putc);
         this.keywords.put("while", TokenType.Palavrachave_while);
- 
+        this.keywords.put("for", TokenType.Palavrachave_for);
+        this.keywords.put("return", TokenType.Palavrachave_return);
+        this.keywords.put("include", TokenType.Palavrachave_include);
+        this.keywords.put("int", TokenType.Tipodado);
+        this.keywords.put("float", TokenType.Tipodado);
+        this.keywords.put("char", TokenType.Tipodado);
+        this.keywords.put("float", TokenType.Tipodado);
+
     }
     Token follow(char expect, TokenType ifyes, TokenType ifno, int line, int pos) {
         if (getNextChar() == expect) {
@@ -116,7 +122,7 @@ public class Lex {
     }
     Token div_or_comment(int line, int pos) {
         if (getNextChar() != '*') {
-            return new Token(TokenType.Op_divide, "", line, pos);
+            return new Token(TokenType.Op_divisao, "", line, pos);
         }
         getNextChar();
         while (true) { 
@@ -189,7 +195,6 @@ public class Lex {
             case '%': getNextChar(); return new Token(TokenType.Op_mod, "", line, pos);
             case ';': getNextChar(); return new Token(TokenType.Pontoevirgula, "", line, pos);
             case ',': getNextChar(); return new Token(TokenType.Virgula, "", line, pos);
- 
             default: return identifier_or_integer(line, pos);
         }
     }
