@@ -1,0 +1,15 @@
+/* Exemplo de comentario */
+
+int main(){
+    int $;
+    x = 3bananas;
+    'xt' = aaa;
+    ''
+    while(x <= 10){
+        print("X ainda nao e 10);
+    }
+    
+    75 = 4 * abacate;
+    x = 22 / 4;
+    y = 10 + 5 - (87 % 2);
+}
